@@ -3,6 +3,7 @@ REGISTRY=moudrick
 VERSION=$(shell git describe --tags --abbrev=0)-$(shell git rev-parse --short HEAD)
 TARGETOS=linux
 TARGETARCH=arm64
+IMAGE_TAG=${REGISTRY}/${APP}:${VERSION}-${TARGETARCH}
 
 format:
 	gofmt -s -w ./
@@ -20,10 +21,45 @@ build: format get
 	CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build -v -o kbot -ldflags "-X="github.com/moudrick/kbot/cmd.appVersion=${VERSION}
 
 image:
-	docker build . -t ${REGISTRY}/${APP}:${VERSION}-${TARGETARCH}
+	docker build . -t ${IMAGE_TAG}
 
 push:
-	docker push ${REGISTRY}/${APP}:${VERSION}-${TARGETARCH}
+	docker push ${IMAGE_TAG}
 
 clean:
 	rm -rf kbot
+	docker rmi ${IMAGE_TAG}
+
+# "make linux", яка збере код для Linux. Те саме повинно бути зроблено для arm, macOS та Windows.
+# -- android arm
+# linux arm64
+# linux amd64
+# darwin amd64
+# windows amd64
+
+eval_arm:
+	$(eval TARGETOS=linux)
+	$(eval TARGETARCH=arm)
+
+eval_linux:
+	$(eval TARGETOS=linux)
+	$(eval TARGETARCH=amd64)
+
+eval_macos:
+	$(eval TARGETOS=darwin)
+	$(eval TARGETARCH=amd64)
+
+eval_windows:
+	$(eval TARGETOS=windows)
+	$(eval TARGETARCH=amd64)
+
+eval_alternative_registry:
+	$(eval REGISTRY=gcr.io/k8s-k3s-386221)
+	$(eval IMAGE_TAG=${REGISTRY}/${APP}:${VERSION}-${TARGETOS}-${TARGETARCH})
+
+alternative_registry: eval_alternative_registry build image push clean
+
+arm:     eval_arm     alternative_registry
+linux:   eval_linux   alternative_registry
+macos:   eval_macos   alternative_registry
+windows: eval_windows alternative_registry
