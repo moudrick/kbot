@@ -4,9 +4,9 @@
 
 replicaCount: 1
 image:
-  repository: moudrick
+  repository: gcr.io/k8s-k3s-386221
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "v1.7.0-2a96d6b"
+  tag: "v1.7.0-7321a1b"
   pullPolicy: Always
   # Always, IfNotPresent, Never
 secret:
