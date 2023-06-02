@@ -30,7 +30,8 @@ jobs:
         env:
           APP: "kbot"
           REGISTRY: "gcr.io/k8s-k3s-386221"
-        run: make image push
+        # run: make eval_alternative_registry image push
+        run: make image push APP=$APP REGISTRY=$REGISTRY
 
   cd:
     name: CD
