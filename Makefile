@@ -4,7 +4,7 @@ VERSION=$(shell git describe --tags --abbrev=0)-$(shell git rev-parse --short HE
 TARGETOS=linux
 # TARGETARCH=arm64
 TARGETARCH=amd64
-IMAGE_TAG=${REGISTRY}/${APP}:${VERSION}-${TARGETARCH}
+IMAGE_TAG=${REGISTRY}/${APP}:${VERSION}-${TARGETOS}-${TARGETARCH}
 
 format:
 	gofmt -s -w ./
