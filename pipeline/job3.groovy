@@ -4,13 +4,12 @@ agent any
     environment {
         REPO = 'https://github.com/moudrick/kbot'
         BRANCH = 'main'
-        
     }
     stages {
         stage('clone') {
             steps {
                 echo 'CLONE REPOSITORY'
-                get branch: "${BRANCH}", url: "${REPO}"
+                git branch: "${BRANCH}", url: "${REPO}"
             }
         }
         stage('test') {
