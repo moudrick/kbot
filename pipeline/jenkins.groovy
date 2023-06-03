@@ -37,7 +37,7 @@ agent any
                 script {
                     
                     echo 'PUSH BUILD STARTED'
-                    docker.withRegistry('', '.dockerhub') {
+                    docker.withRegistry('', 'dockerhub') {
                     sh 'make push'
                     }
                 }
