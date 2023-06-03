@@ -5,6 +5,12 @@ agent any
         REPO = 'https://github.com/moudrick/kbot'
         BRANCH = 'main'
     }
+    parameters {
+
+        choice(name: 'OS', choices: ['linux', 'darwin', 'windows', 'all'], description: 'Pick OS')
+        choice(name: 'ARCH', choices: ['amd64', 'arm64', 'all'], description: 'Pick OS')
+
+    }
     stages {
         stage('clone') {
             steps {
