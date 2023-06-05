@@ -1,0 +1,60 @@
+stages:
+  - clone
+  - test
+  - build
+  - image
+  - push
+
+variables:
+  REPO: 'https://github.com/moudrick/kbot'
+  BRANCH: 'main'
+
+parameters:
+  OS:
+    type: string
+    default: 'linux'
+    options:
+      - linux
+      - darwin
+      - windows
+      - all
+    description: 'Pick OS'
+  ARCH:
+    type: string
+    default: 'amd64'
+    options:
+      - amd64
+      - arm64
+      - all
+    description: 'Pick ARCH'
+
+clone:
+  stage: clone
+  script:
+    - echo 'CLONE REPOSITORY'
+    - git clone --branch $BRANCH $REPO
+
+test:
+  stage: test
+  script:
+    - echo 'TEST EXECUTION STARTED'
+    - make test
+
+build:
+  stage: build
+  script:
+    - echo 'BUILD EXECUTION STARTED'
+    - make build TARGETOS=$OS TARGETARCH=$ARCH
+
+image:
+  stage: image
+  script:
+    - echo 'IMAGE BUILD STARTED'
+    - make image TARGETOS=$OS TARGETARCH=$ARCH
+
+push:
+  stage: push
+  script:
+    - echo 'PUSH BUILD STARTED'
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - make push TARGETOS=$OS TARGETARCH=$ARCH
