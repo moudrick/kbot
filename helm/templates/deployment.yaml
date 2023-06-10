@@ -28,7 +28,7 @@ spec:
       containers:
         - name: {{ .Release.Name }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          image: {{ .Values.image.repository }}/{{ .Chart.Name }}:{{ .Values.image.tag }}-{{ .Values.image.arch | default "amd64"}}
+          image: {{ .Values.image.repository }}/{{ .Chart.Name }}:{{ .Values.image.tag }}-{{ .Values.image.os | default "linux"}}-{{ .Values.image.arch | default "amd64"}}
           command: ["./kbot"]
           args: ["start"]
           env:
