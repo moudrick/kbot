@@ -1,0 +1,11 @@
+apiVersion: v1
+data:
+  grafana-datasources.yaml: "\napiVersion: 1\n\ndatasources:\n- name: Prometheus\n  type: prometheus\n  uid: prometheus\n  orgId: 1\n  url: http://prometheus:9090\n  basicAuth: false\n  isDefault: false\n  version: 1\n  editable: true\n  jsonData:\n    httpMethod: GET\n\n- name: Loki\n  type: loki\n  access: proxy \n  orgId: 1\n  url: http://loki:3100\n  basicAuth: false\n  isDefault: false\n  version: 1\n  editable: true"
+kind: ConfigMap
+metadata:
+  annotations:
+    use-subpath: "true"
+  creationTimestamp: null
+  labels:
+    io.kompose.service: grafana
+  name: grafana-cm0

@@ -1,0 +1,11 @@
+apiVersion: v1
+data:
+  fluent-bit.conf: "[SERVICE]\n    flush 1\n    log_level error\n\n[INPUT]\n    Name   tail\n    Path   /var/lib/docker/containers/*/*.log\n    Parser docker\n    Refresh_Interval 30\n    Ignore_Older 6h\n    Docker_Mode  On\n    Tag source.docker.<container_id>\n    Tag_Regex (.*\\/(?<container_id>.*)-json\\.log)\n\n[FILTER]\n    Name   lua\n    Match  source.docker.*\n    script /fluent-bit/bin/docker-metadata.lua\n    call   encrich_with_docker_metadata\n\n[OUTPUT]\n    Name                 opentelemetry\n    Match                source.docker.*\n    Host                 collector\n    Port                 3030\n    metrics_uri          /v1/metrics\n    logs_uri             /v1/logs\n    traces_uri           /v1/traces\n    Log_response_payload True\n    tls                  off\n    tls.verify           off\n    # add user-defined labels\n    add_label            app fluent-bit\n    add_label            color blue\n    \n# [INPUT]\n#     name      dummy\n#     dummy     {\"key\": 1, \"sub\": {\"stream\": \"stdout\", \"id\": \"some id\"}, \"kubernetes\": {\"labels\": {\"team\": \"Santiago Wanderers\"}}}\n#     samples   1\n    \n# [INPUT]\n#     name            node_exporter_metrics\n#     tag             node_metrics\n#     scrape_interval 180"
+kind: ConfigMap
+metadata:
+  annotations:
+    use-subpath: "true"
+  creationTimestamp: null
+  labels:
+    io.kompose.service: fluentbit
+  name: fluentbit-cm1
