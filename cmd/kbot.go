@@ -29,7 +29,6 @@ var (
 	MetricsHost = os.Getenv("METRICS_HOST")
 )
 
-
 // Initialize OpenTelemetry
 func initMetrics(ctx context.Context) {
 
@@ -102,7 +101,6 @@ to quickly create a Cobra application.`,
 		} else {
 			logger.Info().Str("Version", appVersion).Msg("kbot started")
 		}
-
 
 		kbot.Handle(telebot.OnText, func(m telebot.Context) error {
 			logger.Info().Str("Payload", m.Text()).Msg(m.Message().Payload)

@@ -13,3 +13,7 @@ secret:
   env: TELE_TOKEN
   key: token
   name: kbot
+metrics:
+  env: METRICS_HOST
+  # host: collector:4317
+  host: collector.otel-monitoring.svc.cluster.local:4317
