@@ -38,12 +38,7 @@ spec:
             - name: var-dir
               hostPath:
                 path: /var
-            - name: proc-dir
-              hostPath:
-                path: /proc
-            - name: sys-dir
-              hostPath:
-                path: /sys
+
       volumes:
         - configMap:
             items:
@@ -61,9 +56,3 @@ spec:
         - name: var-dir
           hostPath:
             path: /var
-        - name: proc-dir
-          hostPath:
-            path: /proc
-        - name: sys-dir
-          hostPath:
-            path: /sys
