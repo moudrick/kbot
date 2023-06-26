@@ -35,9 +35,12 @@ spec:
             - mountPath: /fluent-bit/etc/fluent-bit.conf
               name: fluentbit-cm1
               subPath: fluent-bit.conf
-            - name: var-dir
-              hostPath:
-                path: /var
+
+            - name: varlog
+              mountPath: /var/log
+            - name: varlibdockercontainers
+              mountPath: /var/lib/docker/containers
+              readOnly: true
 
       volumes:
         - configMap:
@@ -53,6 +56,9 @@ spec:
             name: fluentbit-cm1
           name: fluentbit-cm1
 
-        - name: var-dir
+        - name: varlog
           hostPath:
-            path: /var
+            path: /var/log
+        - name: varlibdockercontainers
+          hostPath:
+            path: /var/lib/docker/containers
