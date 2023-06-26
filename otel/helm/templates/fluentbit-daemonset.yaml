@@ -42,6 +42,11 @@ spec:
               mountPath: /var/lib/docker/containers
               readOnly: true
 
+            - mountPath: /host/proc
+              name: fluentbit-hostpath3
+            - mountPath: /host/sys
+              name: fluentbit-hostpath4
+
       volumes:
         - configMap:
             items:
@@ -62,3 +67,10 @@ spec:
         - name: varlibdockercontainers
           hostPath:
             path: /var/lib/docker/containers
+
+        - hostPath:
+            path: /proc
+          name: fluentbit-hostpath3
+        - hostPath:
+            path: /sys
+          name: fluentbit-hostpath4

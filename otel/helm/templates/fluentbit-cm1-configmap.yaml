@@ -8,11 +8,13 @@ data:
       [INPUT]
           name            node_exporter_metrics
           tag             node_metrics
-          scrape_interval 2
+          scrape_interval 10
+          path.procfs     /host/proc
+          path.sysfs      /host/sys
 
       [OUTPUT]
           Name                 opentelemetry
-          Match  *
+          Match                *
           Host                 collector
           Port                 3030
           metrics_uri          /v1/metrics
@@ -24,11 +26,6 @@ data:
           # add user-defined labels
           add_label            app fluent-bit
           add_label            color blue
-
-        # [INPUT]
-        #     name            node_exporter_metrics
-        #     tag             node_metrics
-        #     scrape_interval 180
 
 kind: ConfigMap
 metadata:
