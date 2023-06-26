@@ -35,14 +35,15 @@ spec:
             - mountPath: /fluent-bit/etc/fluent-bit.conf
               name: fluentbit-cm1
               subPath: fluent-bit.conf
-            - name: var-log
-              mountPath: /var/log
-            - name: proc
-              mountPath: /proc
-              readOnly: true
-            - name: sys
-              mountPath: /sys
-              readOnly: true
+            - name: var-dir
+              hostPath:
+                path: /var
+            - name: proc-dir
+              hostPath:
+                path: /proc
+            - name: sys-dir
+              hostPath:
+                path: /sys
       volumes:
         - configMap:
             items:
@@ -56,11 +57,13 @@ spec:
                 path: fluent-bit.conf
             name: fluentbit-cm1
           name: fluentbit-cm1
-        - name: var-log
-          emptyDir: {}
-        - name: proc
+
+        - name: var-dir
+          hostPath:
+            path: /var
+        - name: proc-dir
           hostPath:
             path: /proc
-        - name: sys
+        - name: sys-dir
           hostPath:
             path: /sys
