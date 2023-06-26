@@ -1,5 +1,5 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: DaemonSet
 metadata:
   annotations:
     # kompose.cmd: kompose convert -f ../otel/docker-compose.yaml --out ./configmap --volumes configMap
@@ -10,7 +10,6 @@ metadata:
     io.kompose.service: fluentbit
   name: fluentbit
 spec:
-  replicas: 1
   selector:
     matchLabels:
       io.kompose.service: fluentbit
@@ -31,7 +30,6 @@ spec:
           name: fluentbit
           ports:
             - containerPort: 3001
-          resources: {}
           volumeMounts:
             - mountPath: /fluent-bit/bin/docker-metadata.lua
               name: fluentbit-cm0
@@ -39,13 +37,14 @@ spec:
             - mountPath: /fluent-bit/etc/fluent-bit.conf
               name: fluentbit-cm1
               subPath: fluent-bit.conf
-            - mountPath: /var
-              name: fluentbit-claim2
-            - mountPath: /host/proc
-              name: fluentbit-claim3
-            - mountPath: /host/sys
-              name: fluentbit-claim4
-      restartPolicy: Always
+            - name: var-log
+              mountPath: /var/log
+            - name: proc
+              mountPath: /proc
+              readOnly: true
+            - name: sys
+              mountPath: /sys
+              readOnly: true
       volumes:
         - configMap:
             items:
@@ -59,14 +58,11 @@ spec:
                 path: fluent-bit.conf
             name: fluentbit-cm1
           name: fluentbit-cm1
-
-        - name: fluentbit-claim2
-          persistentVolumeClaim:
-            claimName: fluentbit-claim2
-        - name: fluentbit-claim3
-          persistentVolumeClaim:
-            claimName: fluentbit-claim3
-        - name: fluentbit-claim4
-          persistentVolumeClaim:
-            claimName: fluentbit-claim4
-status: {}
+        - name: var-log
+          emptyDir: {}
+        - name: proc
+          hostPath:
+            path: /proc
+        - name: sys
+          hostPath:
+            path: /sys
