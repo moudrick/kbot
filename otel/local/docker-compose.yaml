@@ -2,7 +2,7 @@ version: "3"
 services:
   # Kbot
   kbot:
-    image: moudrick/kbot:v1.7.0-72b72c6-amd64
+    image: moudrick/kbot:v1.7.0-fea64e3-linux-amd64
     environment:
       - METRICS_HOST=collector:4317
       - TELE_TOKEN=${TELE_TOKEN}
