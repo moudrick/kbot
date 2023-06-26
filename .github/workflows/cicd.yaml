@@ -40,7 +40,7 @@ jobs:
     - run: |
         VERSION=$(git describe --tags --abbrev=0)-$(git rev-parse --short HEAD) ; 
         echo "VERSION=$VERSION" >> $GITHUB_ENV ;
-        echo "IMAGE=moudrick/kbot:$VERSION-amd64" >> $GITHUB_ENV ;
+        echo "IMAGE=moudrick/kbot:$VERSION-linux-amd64" >> $GITHUB_ENV ;
 
     - uses: mikefarah/yq@master
       with:
