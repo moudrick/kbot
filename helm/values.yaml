@@ -6,7 +6,7 @@ replicaCount: 1
 image:
   repository: moudrick
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "v1.7.0-31743ce"
+  tag: "v1.7.0-1f2402a"
   pullPolicy: Always
   # Always, IfNotPresent, Never
 secret:
