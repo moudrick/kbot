@@ -13,6 +13,14 @@ spec:
     - name: "3100"
       port: 3100
       targetPort: 3100
+
+    - name: "9096-grpc-listen-port"
+      port: 9096
+      targetPort: 9096
+
+    - name: "9093-ruler-alertmanager-url"
+      port: 3100
+      targetPort: 3100
   selector:
     io.kompose.service: loki
 status:

@@ -32,6 +32,8 @@ spec:
           name: loki
           ports:
             - containerPort: 3100
+            - containerPort: 9096
+            - containerPort: 9093
           resources: {}
           volumeMounts:
             - mountPath: /etc/loki/local-config.yaml
