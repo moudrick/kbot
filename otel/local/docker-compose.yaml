@@ -2,7 +2,7 @@ version: "3"
 services:
   # Kbot
   kbot:
-    image: moudrick/kbot:v1.7.0-a9de06a-linux-amd64
+    image: moudrick/kbot:v1.7.0-dde68b1-linux-amd64
     command: start
     environment:
       - METRICS_HOST=collector:4317
