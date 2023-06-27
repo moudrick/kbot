@@ -31,6 +31,8 @@ spec:
           name: collector
           ports:
             - containerPort: 4317
+            - containerPort: 3030
+            - containerPort: 8889
           resources: {}
           volumeMounts:
             - mountPath: /etc/otel-collector-config.yaml
