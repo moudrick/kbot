@@ -13,10 +13,11 @@ spec:
     - name: "4317"
       port: 4317
       targetPort: 4317
+
     - name: "3030-otlp-http"
       port: 3030
       targetPort: 3030
-      protocol: http
+
     - name: "8889-exporters-prometheus"
       port: 8889
       targetPort: 8889
